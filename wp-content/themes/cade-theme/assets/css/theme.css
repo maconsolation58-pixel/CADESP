@@ -123,3 +123,234 @@ a:hover {
 .map-placeholder::before {
     content: "Espace réservé pour la carte de localisation";
 }
+
+/* --- Composant: Admission Process Section --- */
+
+.admission-process-section {
+    padding: 4em 2em;
+    text-align: center;
+}
+
+.admission-process-section .section-title {
+    margin-bottom: 2em;
+    font-size: 2em;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2em;
+    text-align: left;
+}
+
+.step-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2em;
+    position: relative;
+}
+
+.step-number {
+    position: absolute;
+    top: -1em;
+    left: -1em;
+    background-color: var(--orange-energique);
+    color: white;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: 3px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.step-title {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    color: var(--bleu-institutionnel);
+}
+
+.step-description {
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* --- Composant: Faculty Display Section --- */
+
+.faculty-display-section {
+    padding: 4em 2em;
+    text-align: center;
+}
+
+.faculty-display-section .section-title {
+    margin-bottom: 2em;
+    font-size: 2em;
+}
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2em;
+    margin-bottom: 3em;
+}
+
+.faculty-item {
+    text-align: center;
+}
+
+.faculty-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.faculty-photo-link:hover .faculty-photo {
+    transform: scale(1.05);
+}
+
+.faculty-photo-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1em auto;
+    background-color: #e0e0e0;
+}
+
+.faculty-name {
+    font-size: 1.2em;
+    margin-bottom: 0.25em;
+}
+
+.faculty-name a {
+    text-decoration: none;
+    color: var(--bleu-institutionnel);
+}
+
+.faculty-specialties {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 0;
+}
+
+.all-faculty-link .button {
+    display: inline-block;
+    background-color: var(--bleu-institutionnel);
+    color: white;
+    padding: 0.7em 1.2em;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.all-faculty-link .button:hover {
+    background-color: #002244;
+    text-decoration: none;
+}
+
+/* --- Composant: Event Calendar Section --- */
+
+.event-calendar-section {
+    padding: 4em 2em;
+    background-color: var(--blanc-casse);
+    text-align: center;
+}
+
+.event-calendar-section .section-title {
+    margin-bottom: 2em;
+    font-size: 2em;
+}
+
+.events-list .event-item {
+    background-color: #ffffff;
+    padding: 1.5em;
+    border-radius: 5px;
+    margin-bottom: 1.5em;
+    text-align: left;
+    border-left: 5px solid var(--orange-energique);
+}
+
+.event-item .event-date {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.5em;
+}
+
+.event-item .event-title {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.event-item .event-title a {
+    text-decoration: none;
+    color: var(--bleu-institutionnel);
+}
+
+.event-item .event-excerpt {
+    font-size: 0.95em;
+}
+
+.all-events-link {
+    margin-top: 2em;
+}
+
+/* --- Composant: News Grid Section --- */
+
+.news-grid-section {
+    padding: 4em 2em;
+    text-align: center;
+}
+
+.news-grid-section .section-title {
+    margin-bottom: 2em;
+    font-size: 2em;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    text-align: left;
+    margin-bottom: 3em;
+}
+
+.news-item {
+    border-bottom: 3px solid var(--vert-naturel);
+    padding-bottom: 1.5em;
+}
+
+.news-item .news-title {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.news-item .news-title a {
+    text-decoration: none;
+    color: var(--bleu-institutionnel);
+}
+
+.news-item .news-meta {
+    font-size: 0.85em;
+    color: #777;
+    margin-bottom: 1em;
+}
+
+.news-item .news-excerpt {
+    font-size: 0.95em;
+}
+
+.all-news-link {
+    margin-top: 2em;
+}
