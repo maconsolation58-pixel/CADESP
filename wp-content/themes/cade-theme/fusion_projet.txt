@@ -1,0 +1,1732 @@
+
+
+=====================================
+>>> ./style.css
+=====================================
+
+/*
+Theme Name: CADE Theme
+Theme URI: https://github.com/maconsolation58-pixel/CADESP
+Author: maconsolation58-pixel
+Author URI: https://github.com/maconsolation58-pixel
+Description: Thème sur mesure pour le Collège Académie des Élites (CADE) de San Pedro, basé sur le cahier des charges du projet.
+Version: 1.0.1
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: cade-theme
+*/
+
+
+
+
+
+
+=====================================
+>>> ./index.php
+=====================================
+
+<?php
+/**
+ * Le modèle principal du thème.
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main">
+    <div style="padding: 2em; text-align: center;">
+        <p>Le thème CADE est activé. Le contenu principal s'affichera ici.</p>
+    </div>
+</main>
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./functions.php
+=====================================
+
+<?php
+/**
+ * Fonctions et définitions du thème CADE.
+ *
+ * @package CADE_Theme
+ */
+
+if ( ! function_exists( 'cade_theme_setup' ) ) :
+    function cade_theme_setup() {
+        load_theme_textdomain( 'cade-theme', get_template_directory() . '/languages' );
+        add_theme_support( 'title-tag' );
+        register_nav_menus(
+            array(
+                'main-menu' => esc_html__( 'Menu Principal', 'cade-theme' ),
+            )
+        );
+    }
+endif;
+add_action( 'after_setup_theme', 'cade_theme_setup' );
+
+/**
+ * Met en file d'attente les scripts et les styles.
+ */
+function cade_theme_enqueue_scripts() {
+    // Polices
+    wp_enqueue_style( 'cade-theme-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap', array(), null );
+
+    // Feuille de style principale du thème
+    wp_enqueue_style( 'cade-theme-main-style', get_template_directory_uri() . '/assets/css/theme.css', array('cade-theme-fonts'), '1.0.0' );
+
+    // Feuille de style racine (pour les informations du thème)
+    wp_enqueue_style( 'cade-theme-root-style', get_stylesheet_uri(), array('cade-theme-main-style'), '1.0.1' );
+
+    // Fichier JavaScript principal
+    wp_enqueue_script( 'cade-theme-main-js', get_template_directory_uri() . '/assets/js/main.js', array(), '1.0.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'cade_theme_enqueue_scripts' );
+
+// Chargements des fonctionnalités du thème
+require get_template_directory() . '/inc/custom-post-types.php';
+require get_template_directory() . '/inc/custom-taxonomies.php';
+
+
+
+
+
+
+=====================================
+>>> ./header.php
+=====================================
+
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+<div id="page" class="site">
+    <header id="masthead" class="site-header" style="border-bottom: 2px solid #003366; padding: 1em;">
+        <div class="site-branding">
+            <h1 class="site-title">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+                    <?php bloginfo( 'name' ); ?>
+                </a>
+            </h1>
+        </div>
+        
+        <?php get_template_part( 'template-parts/components/contact-info' ); ?>
+
+        <?php get_template_part( 'template-parts/layout/header/main-navigation' ); ?>
+
+    </header>
+    <div id="content" class="site-content">
+
+
+
+
+
+
+=====================================
+>>> ./footer.php
+=====================================
+
+    </div><!-- #content -->
+    <footer id="colophon" class="site-footer">
+        <div class="site-info">
+            &copy; <?php echo date('Y'); ?> <?php bloginfo( 'name' ); ?>
+        </div>
+    </footer>
+</div><!-- #page -->
+<?php wp_footer(); ?>
+</body>
+</html>
+
+
+
+
+
+
+=====================================
+>>> ./template-parts/components/contact-info.php
+=====================================
+
+<?php
+/**
+ * Affiche les coordonnées officielles du CADE.
+ *
+ * @package CADE_Theme
+ */
+
+?>
+<div class="contact-info" style="padding: 1em; background-color: #f1f1f1; border: 1px solid #ddd;">
+    <h3 style="margin-top: 0;">Coordonnées Officielles</h3>
+    
+    <p>
+        <strong>Téléphones:</strong><br>
+        <?php if ( defined( 'CADE_PHONE_1' ) ) : ?>
+            <a href="tel:<?php echo esc_attr( str_replace(' ', '', CADE_PHONE_1) ); ?>"><?php echo esc_html( CADE_PHONE_1 ); ?></a><br>
+        <?php endif; ?>
+        <?php if ( defined( 'CADE_PHONE_2' ) ) : ?>
+            <a href="tel:<?php echo esc_attr( str_replace(' ', '', CADE_PHONE_2) ); ?>"><?php echo esc_html( CADE_PHONE_2 ); ?></a>
+        <?php endif; ?>
+    </p>
+
+    <p>
+        <strong>Emails:</strong><br>
+        <?php if ( defined( 'CADE_EMAIL_1' ) ) : ?>
+            <a href="mailto:<?php echo esc_attr( CADE_EMAIL_1 ); ?>"><?php echo esc_html( CADE_EMAIL_1 ); ?></a><br>
+        <?php endif; ?>
+        <?php if ( defined( 'CADE_EMAIL_2' ) ) : ?>
+            <a href="mailto:<?php echo esc_attr( CADE_EMAIL_2 ); ?>"><?php echo esc_html( CADE_EMAIL_2 ); ?></a>
+        <?php endif; ?>
+    </p>
+
+    <p>
+        <strong>Adresse:</strong><br>
+        <?php if ( defined( 'CADE_ADDRESS' ) ) : ?>
+            <?php echo nl2br( esc_html( CADE_ADDRESS ) ); ?>
+        <?php endif; ?>
+    </p>
+</div>
+
+
+
+
+
+
+=====================================
+>>> ./template-parts/components/hero-sanpedro.php
+=====================================
+
+<?php
+/**
+ * Le composant "Hero" pour la page d'accueil.
+ * @package CADE_Theme
+ */
+?>
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Collège Académie des Élites</h1>
+        <p class="hero-subtitle">L'excellence éducative au cœur de San Pedro.</p>
+        <a href="#" class="hero-button">Découvrir nos programmes</a>
+    </div>
+</section>
+
+
+
+
+
+
+=====================================
+>>> ./template-parts/components/location-map.php
+=====================================
+
+<?php
+/**
+ * Le composant "Carte de Localisation".
+ * @package CADE_Theme
+ */
+?>
+<section class="location-map-section">
+    <div class="map-placeholder">
+        <!-- Le code d'intégration de la carte (iframe) sera placé ici -->
+    </div>
+</section>
+
+
+
+
+
+
+=====================================
+>>> ./template-parts/layout/header/main-navigation.php
+=====================================
+
+<?php
+/**
+ * Affiche la navigation principale du site.
+ *
+ * @package CADE_Theme
+ */
+?>
+<nav id="site-navigation" class="main-navigation" style="border-top: 1px solid #eee; margin-top: 1em; padding-top: 1em;">
+    <?php
+    if ( has_nav_menu( 'main-menu' ) ) {
+        wp_nav_menu(
+            array(
+                'theme_location' => 'main-menu',
+                'menu_id'        => 'primary-menu',
+                'container'      => false,
+            )
+        );
+    } else {
+        echo '<p style="color: #c00;">Aucun menu assigné à l\'emplacement "Menu Principal".</p>';
+    }
+    ?>
+</nav>
+
+
+
+
+
+
+=====================================
+>>> ./inc/custom-post-types.php
+=====================================
+
+<?php
+/**
+ * Enregistrement des Types de Contenus Personnalisés pour le thème CADE.
+ *
+ * @package CADE_Theme
+ */
+
+function cade_register_post_types() {
+
+    // 1. Enseignants (teacher)
+    $teacher_labels = array(
+        'name'                  => _x( 'Enseignants', 'Post Type General Name', 'cade-theme' ),
+        'singular_name'         => _x( 'Enseignant', 'Post Type Singular Name', 'cade-theme' ),
+        'menu_name'             => __( 'Enseignants', 'cade-theme' ),
+        'archives'              => __( 'Archives des Enseignants', 'cade-theme' ),
+        'add_new_item'          => __( 'Ajouter un nouvel enseignant', 'cade-theme' ),
+        'add_new'               => __( 'Ajouter', 'cade-theme' ),
+        'new_item'              => __( 'Nouvel enseignant', 'cade-theme' ),
+        'edit_item'             => __( 'Modifier l\'enseignant', 'cade-theme' ),
+        'update_item'           => __( 'Mettre à jour l\'enseignant', 'cade-theme' ),
+        'view_item'             => __( 'Voir l\'enseignant', 'cade-theme' ),
+        'search_items'          => __( 'Rechercher un enseignant', 'cade-theme' ),
+    );
+    $teacher_args = array(
+        'label'                 => __( 'Enseignant', 'cade-theme' ),
+        'description'           => __( 'Le personnel enseignant de l\'établissement.', 'cade-theme' ),
+        'labels'                => $teacher_labels,
+        'supports'              => array( 'title', 'editor', 'thumbnail' ),
+        'hierarchical'          => false,
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 20,
+        'menu_icon'             => 'dashicons-groups',
+        'show_in_admin_bar'     => true,
+        'show_in_nav_menus'     => true,
+        'can_export'            => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => false,
+        'publicly_queryable'    => true,
+        'capability_type'       => 'post',
+    );
+    register_post_type( 'teacher', $teacher_args );
+
+    // 2. Cours (course)
+    $course_labels = array(
+        'name'                  => _x( 'Cours', 'Post Type General Name', 'cade-theme' ),
+        'singular_name'         => _x( 'Cours', 'Post Type Singular Name', 'cade-theme' ),
+        'menu_name'             => __( 'Cours', 'cade-theme' ),
+        'archives'              => __( 'Archives des Cours', 'cade-theme' ),
+        'add_new_item'          => __( 'Ajouter un nouveau cours', 'cade-theme' ),
+        'add_new'               => __( 'Ajouter', 'cade-theme' ),
+    );
+    $course_args = array(
+        'label'                 => __( 'Cours', 'cade-theme' ),
+        'labels'                => $course_labels,
+        'supports'              => array( 'title', 'editor', 'revisions' ),
+        'public'                => true,
+        'show_ui'               => true,
+        'menu_position'         => 21,
+        'menu_icon'             => 'dashicons-welcome-learn-more',
+        'has_archive'           => true,
+    );
+    register_post_type( 'course', $course_args );
+
+    // 3. Événements (event)
+    $event_labels = array(
+        'name'                  => _x( 'Événements', 'Post Type General Name', 'cade-theme' ),
+        'singular_name'         => _x( 'Événement', 'Post Type Singular Name', 'cade-theme' ),
+        'menu_name'             => __( 'Événements', 'cade-theme' ),
+        'add_new_item'          => __( 'Ajouter un nouvel événement', 'cade-theme' ),
+        'add_new'               => __( 'Ajouter', 'cade-theme' ),
+    );
+    $event_args = array(
+        'label'                 => __( 'Événement', 'cade-theme' ),
+        'labels'                => $event_labels,
+        'supports'              => array( 'title', 'editor', 'thumbnail' ),
+        'public'                => true,
+        'show_ui'               => true,
+        'menu_position'         => 22,
+        'menu_icon'             => 'dashicons-calendar-alt',
+        'has_archive'           => true,
+    );
+    register_post_type( 'event', $event_args );
+
+    // 4. Actualités (news)
+    $news_labels = array(
+        'name'                  => _x( 'Actualités', 'Post Type General Name', 'cade-theme' ),
+        'singular_name'         => _x( 'Actualité', 'Post Type Singular Name', 'cade-theme' ),
+        'menu_name'             => __( 'Actualités', 'cade-theme' ),
+        'add_new_item'          => __( 'Ajouter une nouvelle actualité', 'cade-theme' ),
+        'add_new'               => __( 'Ajouter', 'cade-theme' ),
+    );
+    $news_args = array(
+        'label'                 => __( 'Actualité', 'cade-theme' ),
+        'labels'                => $news_labels,
+        'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+        'public'                => true,
+        'show_ui'               => true,
+        'menu_position'         => 23,
+        'menu_icon'             => 'dashicons-megaphone',
+        'has_archive'           => true,
+    );
+    register_post_type( 'news', $news_args );
+
+}
+add_action( 'init', 'cade_register_post_types' );
+
+
+
+
+
+
+=====================================
+>>> ./inc/custom-taxonomies.php
+=====================================
+
+<?php
+/**
+ * Enregistrement des Taxonomies Personnalisées pour le thème CADE.
+ *
+ * @package CADE_Theme
+ */
+
+function cade_register_taxonomies() {
+
+    // 1. Spécialités (pour les Enseignants)
+    $specialite_labels = array(
+        'name'              => _x( 'Spécialités', 'taxonomy general name', 'cade-theme' ),
+        'singular_name'     => _x( 'Spécialité', 'taxonomy singular name', 'cade-theme' ),
+        'search_items'      => __( 'Rechercher des spécialités', 'cade-theme' ),
+        'all_items'         => __( 'Toutes les spécialités', 'cade-theme' ),
+        'edit_item'         => __( 'Modifier la spécialité', 'cade-theme' ),
+        'update_item'       => __( 'Mettre à jour la spécialité', 'cade-theme' ),
+        'add_new_item'      => __( 'Ajouter une nouvelle spécialité', 'cade-theme' ),
+        'new_item_name'     => __( 'Nom de la nouvelle spécialité', 'cade-theme' ),
+        'menu_name'         => __( 'Spécialités', 'cade-theme' ),
+    );
+    $specialite_args = array(
+        'hierarchical'      => false, // Non-hiérarchique, comme des étiquettes
+        'labels'            => $specialite_labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+    );
+    register_taxonomy( 'specialite', array( 'teacher' ), $specialite_args );
+
+    // 2. Niveau Scolaire (pour les Cours)
+    $niveau_labels = array( 'name' => __( 'Niveaux Scolaires', 'cade-theme' ), 'singular_name' => __( 'Niveau Scolaire', 'cade-theme' ) );
+    $niveau_args = array( 'hierarchical' => true, 'labels' => $niveau_labels, 'show_admin_column' => true );
+    register_taxonomy( 'niveau_scolaire', array( 'course' ), $niveau_args );
+
+    // 3. Matière (pour les Cours)
+    $matiere_labels = array( 'name' => __( 'Matières', 'cade-theme' ), 'singular_name' => __( 'Matière', 'cade-theme' ) );
+    $matiere_args = array( 'hierarchical' => true, 'labels' => $matiere_labels, 'show_admin_column' => true );
+    register_taxonomy( 'matiere', array( 'course' ), $matiere_args );
+
+    // 4. Public Cible (pour les Événements)
+    $public_labels = array( 'name' => __( 'Publics Cibles', 'cade-theme' ), 'singular_name' => __( 'Public Cible', 'cade-theme' ) );
+    $public_args = array( 'hierarchical' => false, 'labels' => $public_labels, 'show_admin_column' => true );
+    register_taxonomy( 'public_cible', array( 'event' ), $public_args );
+
+    // 5. Catégories d'actualités (pour les Actualités)
+    $cat_news_labels = array( 'name' => __( 'Catégories', 'cade-theme' ), 'singular_name' => __( 'Catégorie', 'cade-theme' ) );
+    $cat_news_args = array( 'hierarchical' => true, 'labels' => $cat_news_labels, 'show_admin_column' => true );
+    register_taxonomy( 'news_category', array( 'news' ), $cat_news_args );
+
+}
+add_action( 'init', 'cade_register_taxonomies' );
+
+
+
+
+
+
+=====================================
+>>> ./acf-json/group_650b0d38b8c58.json
+=====================================
+
+{
+    "key": "group_650b0d38b8c58",
+    "title": "Champs pour Cours",
+    "fields": [
+        {
+            "key": "field_650b0d38c1164",
+            "label": "Salle de classe",
+            "name": "salle_de_classe",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "default_value": false,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "return_format": "value",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_650b0d38c11a8",
+            "label": "Ressources pédagogiques",
+            "name": "ressources_pedagogiques",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_650b0d38c11e7",
+            "label": "Objectifs pédagogiques",
+            "name": "objectifs_pedagogiques",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "default_value": "",
+            "delay": 0
+        },
+        {
+            "key": "field_650b0d38c1223",
+            "label": "Planning",
+            "name": "planning",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y g:i a",
+            "return_format": "d\/m\/Y g:i a",
+            "first_day": 1,
+            "default_to_current_date": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "course"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "modified": 1758397631
+}
+
+
+
+
+
+
+=====================================
+>>> ./acf-json/group_650b0f7791a32.json
+=====================================
+
+{
+    "key": "group_650b0f7791a32",
+    "title": "Champs pour Enseignants",
+    "fields": [
+        {
+            "key": "field_650b0f779a1f2",
+            "label": "Diplômes",
+            "name": "diplomes",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_650b0f779a22d",
+            "label": "Années d'expérience",
+            "name": "annees_dexperience",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_650b0f779a263",
+            "label": "Disponibilités",
+            "name": "disponibilites",
+            "aria-label": "",
+            "type": "time_picker",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "g:i a",
+            "return_format": "g:i a"
+        },
+        {
+            "key": "field_650b0f779a29a",
+            "label": "Photo professionnelle",
+            "name": "photo_professionnelle",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_650b0f779a2d1",
+            "label": "Récompenses",
+            "name": "recompenses",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Remplacé par une zone de texte, le champ Répéteur nécessite ACF Pro.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": "",
+            "rows": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "teacher"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "modified": 1758397631
+}
+
+
+
+
+
+
+=====================================
+>>> ./acf-json/group_650b115584b47.json
+=====================================
+
+{
+    "key": "group_650b115584b47",
+    "title": "Champs pour Événements",
+    "fields": [
+        {
+            "key": "field_650b11558c42b",
+            "label": "Type d'événement",
+            "name": "type_devenement",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "default_value": false,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "return_format": "value",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_650b11558c465",
+            "label": "Date de début\/fin",
+            "name": "date_de_debutfin",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y g:i a",
+            "return_format": "d\/m\/Y g:i a",
+            "first_day": 1,
+            "default_to_current_date": 0
+        },
+        {
+            "key": "field_650b11558c49d",
+            "label": "Inscription requise",
+            "name": "inscription_requise",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "ui": 1,
+            "default_value": 0,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_650b11558c4d2",
+            "label": "Capacité maximale",
+            "name": "capacite_maximale",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "event"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "modified": 1758397631
+}
+
+
+
+
+
+
+=====================================
+>>> ./acf-json/group_650b11f77d3f8.json
+=====================================
+
+{
+    "key": "group_650b11f77d3f8",
+    "title": "Champs pour Actualités",
+    "fields": [
+        {
+            "key": "field_650b11f784d0b",
+            "label": "Source",
+            "name": "source",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "news"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "modified": 1758397631
+}
+
+
+
+
+
+
+=====================================
+>>> ./page.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher toutes les pages.
+ *
+ * C'est le modèle qui s'affiche pour une page par défaut.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <?php
+    while ( have_posts() ) :
+        the_post();
+        ?>
+
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <header class="entry-header">
+                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            </header><!-- .entry-header -->
+
+            <div class="entry-content">
+                <?php
+                the_content();
+                ?>
+            </div><!-- .entry-content -->
+        </article><!-- #post-<?php the_ID(); ?> -->
+
+        <?php
+    endwhile; // Fin de la boucle.
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./archive-news.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher l'archive du type de contenu "news".
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <header class="page-header">
+        <h1 class="page-title">Actualités</h1>
+    </header>
+
+    <?php if ( have_posts() ) : ?>
+
+        <div class="news-grid">
+            <?php
+            // Démarrage de la Boucle.
+            while ( have_posts() ) :
+                the_post();
+                ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="margin-bottom: 2em; border-bottom: 1px solid #ccc; padding-bottom: 1em;">
+                    <header class="entry-header">
+                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+                    </header>
+                    <div class="entry-summary">
+                        <?php the_excerpt(); ?>
+                    </div>
+                </article>
+                <?php
+            endwhile;
+            ?>
+        </div>
+
+    <?php
+    else :
+        // Section affichée si aucun contenu n'est trouvé.
+        ?>
+        <section class="no-results not-found">
+            <p>Aucune actualité n'a été trouvée. Veuillez revenir plus tard.</p>
+        </section>
+        <?php
+    endif;
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./single-news.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher une seule actualité (CPT "news").
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <?php
+    while ( have_posts() ) :
+        the_post();
+        ?>
+
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <header class="entry-header">
+                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            </header><!-- .entry-header -->
+
+            <div class="entry-content">
+                <?php
+                the_content(); // Affiche le contenu complet de l'article
+                ?>
+            </div><!-- .entry-content -->
+
+            <footer class="entry-footer" style="margin-top: 2em; padding-top: 1em; border-top: 1px solid #eee;">
+                <?php
+                // Récupérer et afficher le champ personnalisé "Source" s'il existe
+                $source = get_field('source');
+                if ( $source ) {
+                    echo '<p><strong>Source :</strong> ' . esc_html( $source ) . '</p>';
+                }
+                ?>
+            </footer><!-- .entry-footer -->
+        </article><!-- #post-<?php the_ID(); ?> -->
+
+        <?php
+    endwhile; // Fin de la boucle.
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./archive-event.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher l'archive du type de contenu "event".
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <header class="page-header">
+        <h1 class="page-title">Événements</h1>
+    </header>
+
+    <?php if ( have_posts() ) : ?>
+
+        <div class="events-list">
+            <?php
+            // Démarrage de la Boucle.
+            while ( have_posts() ) :
+                the_post();
+
+                // Récupérer la date de l'événement depuis ACF
+                $event_date = get_field('date_de_debutfin');
+                ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="margin-bottom: 2em; border-bottom: 1px solid #ccc; padding-bottom: 1em;">
+                    <header class="entry-header">
+                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+                    </header>
+                    
+                    <?php if ( $event_date ) : ?>
+                        <div class="event-meta" style="font-style: italic; color: #555;">
+                            Date : <?php echo esc_html( $event_date ); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="entry-summary">
+                        <?php the_excerpt(); ?>
+                    </div>
+                </article>
+                <?php
+            endwhile;
+            ?>
+        </div>
+
+    <?php
+    else :
+        // Section affichée si aucun contenu n'est trouvé.
+        ?>
+        <section class="no-results not-found">
+            <p>Aucun événement n'a été trouvé. Veuillez revenir plus tard.</p>
+        </section>
+        <?php
+    endif;
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./single-event.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher un seul événement (CPT "event").
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <?php
+    while ( have_posts() ) :
+        the_post();
+        ?>
+
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <header class="entry-header">
+                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            </header><!-- .entry-header -->
+
+            <div class="entry-content">
+                <?php
+                the_content(); // Affiche la description complète de l'événement
+                ?>
+            </div><!-- .entry-content -->
+
+            <footer class="entry-footer" style="margin-top: 2em; padding-top: 1em; border-top: 1px solid #eee; background-color: #fafafa; padding: 1em;">
+                <h3>Détails de l'événement</h3>
+                <?php
+                // Récupérer et afficher les champs personnalisés de l'événement
+                $type = get_field('type_devenement');
+                $date = get_field('date_de_debutfin');
+                $inscription_requise = get_field('inscription_requise');
+                $capacite = get_field('capacite_maximale');
+
+                if ( $type ) {
+                    echo '<p><strong>Type :</strong> ' . esc_html( $type ) . '</p>';
+                }
+                if ( $date ) {
+                    echo '<p><strong>Date et heure :</strong> ' . esc_html( $date ) . '</p>';
+                }
+                if ( $capacite ) {
+                    echo '<p><strong>Capacité maximale :</strong> ' . esc_html( $capacite ) . ' participants</p>';
+                }
+                
+                // Gérer l'affichage du champ Vrai/Faux pour l'inscription
+                echo '<p><strong>Inscription requise :</strong> ' . ( $inscription_requise ? 'Oui' : 'Non' ) . '</p>';
+                ?>
+            </footer><!-- .entry-footer -->
+        </article><!-- #post-<?php the_ID(); ?> -->
+
+        <?php
+    endwhile; // Fin de la boucle.
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./archive-course.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher l'archive du type de contenu "course".
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <header class="page-header">
+        <h1 class="page-title">Nos Cours</h1>
+    </header>
+
+    <?php if ( have_posts() ) : ?>
+
+        <div class="courses-list">
+            <?php
+            // Démarrage de la Boucle.
+            while ( have_posts() ) :
+                the_post();
+                ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="margin-bottom: 2em; border-bottom: 1px solid #ccc; padding-bottom: 1em;">
+                    <header class="entry-header">
+                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+                    </header>
+                    
+                    <div class="course-meta" style="font-size: 0.9em; color: #555;">
+                        <?php 
+                        // Afficher les taxonomies "Niveau Scolaire" et "Matière"
+                        echo get_the_term_list( get_the_ID(), 'niveau_scolaire', 'Niveau : ', ', ', '<br>' );
+                        echo get_the_term_list( get_the_ID(), 'matiere', 'Matière : ', ', ' );
+                        ?>
+                    </div>
+
+                    <div class="entry-summary">
+                        <?php the_excerpt(); ?>
+                    </div>
+                </article>
+                <?php
+            endwhile;
+            ?>
+        </div>
+
+    <?php
+    else :
+        // Section affichée si aucun contenu n'est trouvé.
+        ?>
+        <section class="no-results not-found">
+            <p>Aucun cours n'a été trouvé pour le moment. Veuillez revenir plus tard.</p>
+        </section>
+        <?php
+    endif;
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./single-course.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher un seul cours (CPT "course").
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <?php
+    while ( have_posts() ) :
+        the_post();
+        ?>
+
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <header class="entry-header">
+                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            </header><!-- .entry-header -->
+            
+            <div class="course-meta" style="font-size: 0.9em; color: #555; margin-bottom: 1.5em;">
+                <?php 
+                // Afficher les taxonomies "Niveau Scolaire" et "Matière"
+                echo get_the_term_list( get_the_ID(), 'niveau_scolaire', '<strong>Niveau :</strong> ', ', ', '<br>' );
+                echo get_the_term_list( get_the_ID(), 'matiere', '<strong>Matière :</strong> ', ', ' );
+                ?>
+            </div>
+
+            <div class="entry-content">
+                <?php
+                the_content(); // Affiche la description complète du cours
+                ?>
+            </div><!-- .entry-content -->
+
+            <footer class="entry-footer" style="margin-top: 2em; padding-top: 1em; border-top: 1px solid #eee; background-color: #fafafa; padding: 1em;">
+                <h3>Informations sur le cours</h3>
+                <?php
+                // Récupérer et afficher les champs personnalisés du cours
+                $salle = get_field('salle_de_classe');
+                $ressources = get_field('ressources_pedagogiques');
+                $objectifs = get_field('objectifs_pedagogiques');
+                $planning = get_field('planning');
+
+                if ( $salle ) {
+                    echo '<p><strong>Salle de classe :</strong> ' . esc_html( $salle ) . '</p>';
+                }
+                if ( $planning ) {
+                    echo '<p><strong>Planning :</strong> ' . esc_html( $planning ) . '</p>';
+                }
+                if ( $objectifs ) {
+                    echo '<div><strong>Objectifs pédagogiques :</strong>' . wp_kses_post( $objectifs ) . '</div>';
+                }
+                if ( $ressources ) {
+                    echo '<p><strong>Ressources à télécharger :</strong> <a href="' . esc_url($ressources['url']) . '" target="_blank">' . esc_html($ressources['filename']) . '</a></p>';
+                }
+                ?>
+            </footer><!-- .entry-footer -->
+        </article><!-- #post-<?php the_ID(); ?> -->
+
+        <?php
+    endwhile; // Fin de la boucle.
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./archive-teacher.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher l'archive du type de contenu "teacher".
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <header class="page-header">
+        <h1 class="page-title">Notre Équipe Pédagogique</h1>
+    </header>
+
+    <?php if ( have_posts() ) : ?>
+
+        <div class="teacher-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2em;">
+            <?php
+            // Démarrage de la Boucle.
+            while ( have_posts() ) :
+                the_post();
+                $photo = get_field('photo_professionnelle');
+                ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="border: 1px solid #ddd; text-align: center; padding: 1em;">
+                    
+                    <?php if ( $photo ) : ?>
+                        <a href="<?php the_permalink(); ?>">
+                            <img src="<?php echo esc_url($photo['sizes']['medium']); ?>" alt="<?php echo esc_attr($photo['alt']); ?>" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+                        </a>
+                    <?php endif; ?>
+
+                    <header class="entry-header" style="margin-top: 1em;">
+                        <?php the_title( sprintf( '<h2 class="entry-title" style="font-size: 1.2em;"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+                    </header>
+                    
+                    <div class="teacher-meta" style="font-size: 0.9em; color: #555;">
+                        <?php 
+                        // Afficher la taxonomie "Spécialités"
+                        echo get_the_term_list( get_the_ID(), 'specialite', '', ', ' );
+                        ?>
+                    </div>
+                </article>
+                <?php
+            endwhile;
+            ?>
+        </div>
+
+    <?php
+    else :
+        ?>
+        <section class="no-results not-found">
+            <p>Aucun enseignant n'a été trouvé pour le moment. Veuillez revenir plus tard.</p>
+        </section>
+        <?php
+    endif;
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./single-teacher.php
+=====================================
+
+<?php
+/**
+ * Le modèle pour afficher un seul enseignant (CPT "teacher").
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package CADE_Theme
+ */
+
+get_header();
+?>
+
+<main id="primary" class="site-main" style="padding: 2em;">
+
+    <?php
+    while ( have_posts() ) :
+        the_post();
+        ?>
+
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <header class="entry-header">
+                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+                <div class="teacher-meta" style="font-size: 1em; color: #555; margin-bottom: 1.5em; font-family: var(--font-texte);">
+                    <?php 
+                    // Afficher la taxonomie "Spécialités"
+                    echo get_the_term_list( get_the_ID(), 'specialite', '<strong>Spécialités :</strong> ', ', ' );
+                    ?>
+                </div>
+            </header><!-- .entry-header -->
+            
+            <div class="entry-content" style="display: flex; flex-wrap: wrap; gap: 2em;">
+                <?php
+                $photo = get_field('photo_professionnelle');
+                if ( $photo ) : ?>
+                    <div class="teacher-photo" style="flex: 1; min-width: 200px;">
+                        <img src="<?php echo esc_url($photo['url']); ?>" alt="<?php echo esc_attr($photo['alt']); ?>" style="max-width: 100%; height: auto; border-radius: 5px;">
+                    </div>
+                <?php endif; ?>
+
+                <div class="teacher-bio" style="flex: 2; min-width: 300px;">
+                    <?php the_content(); // Affiche la biographie complète ?>
+                </div>
+            </div><!-- .entry-content -->
+
+            <footer class="entry-footer" style="margin-top: 2em; padding-top: 1em; border-top: 1px solid #eee; background-color: #fafafa; padding: 1em;">
+                <h3>Informations Complémentaires</h3>
+                <?php
+                // Récupérer et afficher les champs personnalisés
+                $diplomes = get_field('diplomes');
+                $experience = get_field('annees_dexperience');
+                $disponibilites = get_field('disponibilites');
+                $recompenses = get_field('recompenses');
+
+                if ( $diplomes ) {
+                    echo '<p><strong>Diplômes :</strong> ' . esc_html( $diplomes ) . '</p>';
+                }
+                if ( $experience ) {
+                    echo '<p><strong>Années d\'expérience :</strong> ' . esc_html( $experience ) . '</p>';
+                }
+                if ( $disponibilites ) {
+                    echo '<p><strong>Disponibilités :</strong> ' . esc_html( $disponibilites ) . '</p>';
+                }
+                if ( $recompenses ) {
+                    echo '<div><strong>Récompenses et distinctions :</strong><br>' . wp_kses_post( nl2br($recompenses) ) . '</div>';
+                }
+                ?>
+            </footer><!-- .entry-footer -->
+        </article><!-- #post-<?php the_ID(); ?> -->
+
+        <?php
+    endwhile; // Fin de la boucle.
+    ?>
+
+</main><!-- #main -->
+
+<?php
+get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./templates/public/template-homepage.php
+=====================================
+
+<?php
+/** Template Name: Page daccueil */
+get_header();
+?>
+<main id="primary" class="site-main">
+    <?php while ( have_posts() ) : the_post(); ?>
+        <div class="homepage-content">
+            <?php get_template_part("template-parts/components/hero-sanpedro"); ?>
+            <div class="entry-content" style="padding: 2em;"><?php the_content(); ?></div>
+            <section class="placeholder-section" style="padding: 2em; text-align: center;">
+                <p>Les futurs composants (plan, programmes) seront insérés ici.</p>
+            </section>
+        </div>
+    <?php endwhile; ?>
+</main><!-- #main -->
+<?php get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./templates/public/template-contact.php
+=====================================
+
+<?php
+/** Template Name: Page de Contact */
+get_header();
+?>
+<main id="primary" class="site-main">
+    <?php while ( have_posts() ) : the_post(); ?>
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <header class="entry-header" style="padding: 2em; text-align: center;">
+                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            </header>
+            <div class="entry-content" style="padding: 0 2em 2em 2em;"><?php the_content(); ?></div>
+            <?php get_template_part("template-parts/components/location-map"); ?>
+            <section class="contact-details" style="padding: 2em; background-color: #f9f9f9;">
+                <h2>Nos Coordonnées</h2>
+                <?php get_template_part( "template-parts/components/contact-info" ); ?>
+            </section>
+            <section class="contact-form-placeholder" style="padding: 2em;">
+                <h2>Nous Envoyer un Message</h2>
+                <p>Le formulaire de contact sera inséré ici.</p>
+            </section>
+        </article>
+    <?php endwhile; ?>
+</main><!-- #main -->
+<?php get_footer();
+
+
+
+
+
+
+=====================================
+>>> ./assets/css/theme.css
+=====================================
+
+/*
+Theme Name: CADE Theme
+Theme URI: https://github.com/maconsolation58-pixel/CADESP
+Author: maconsolation58-pixel
+Author URI: https://github.com/maconsolation58-pixel
+Description: Thème sur mesure pour le Collège Académie des Élites (CADE) de San Pedro, basé sur le cahier des charges du projet.
+Version: 1.0.1
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: cade-theme
+*/
+
+/* --- Guide de Style CADE --- */
+
+:root {
+    --bleu-institutionnel: #003366;
+    --orange-energique: #FF6600;
+    --vert-naturel: #006633;
+    --blanc-casse: #F8F8F8;
+    --grafite: #333333;
+
+    --font-titres: 'Playfair Display', serif;
+    --font-texte: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--font-texte);
+    background-color: var(--blanc-casse);
+    color: var(--grafite);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-titres);
+    color: var(--bleu-institutionnel);
+}
+
+a {
+    color: var(--orange-energique);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Responsive Design: Tailles de police --- */
+
+/* Pour les tablettes */
+@media (min-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+}
+
+/* Pour les ordinateurs de bureau */
+@media (min-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+}
+
+/* --- Composant: Hero Section --- */
+
+.hero-section {
+    background-color: var(--bleu-institutionnel);
+    color: white;
+    padding: 5em 2em;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: white; /* Répété pour surcharger la couleur par défaut des titres */
+}
+
+.hero-subtitle {
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+.hero-button {
+    display: inline-block;
+    background-color: var(--orange-energique);
+    color: white;
+    padding: 0.8em 1.5em;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+    background-color: #e65c00; /* Une teinte d'orange légèrement plus foncée */
+    text-decoration: none;
+}
+
+/* --- Composant: Carte de Localisation --- */
+
+.location-map-section {
+    padding: 2em 0;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 400px;
+    background-color: #e9e9e9;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2em;
+    color: #777;
+}
+
+.map-placeholder::before {
+    content: "Espace réservé pour la carte de localisation";
+}
+
+
+
+
+
+
+=====================================
+>>> ./assets/js/main.js
+=====================================
