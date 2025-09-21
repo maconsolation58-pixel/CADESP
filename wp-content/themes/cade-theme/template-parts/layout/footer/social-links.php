@@ -1,5 +1,10 @@
+<?php
+/**
+ * Affiche les liens vers les réseaux sociaux.
+ */
+?>
 <div class="social-links">
-    <a href="#" class="social-icon facebook" aria-label="Facebook"></a>
-    <a href="#" class="social-icon twitter" aria-label="Twitter"></a>
-    <a href="#" class="social-icon linkedin" aria-label="LinkedIn"></a>
+    <a href="#" aria-label="Facebook"></a>
+    <a href="#" aria-label="Twitter"></a>
+    <a href="#" aria-label="LinkedIn"></a>
 </div>
