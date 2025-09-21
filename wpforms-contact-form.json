@@ -1,0 +1,82 @@
+[{
+    "field_id": 6,
+    "fields": {
+        "1": {
+            "id": "1",
+            "type": "name",
+            "label": "Nom Complet",
+            "format": "first-last",
+            "description": "",
+            "required": "1",
+            "size": "large",
+            "first_placeholder": "Prénom",
+            "last_placeholder": "Nom"
+        },
+        "2": {
+            "id": "2",
+            "type": "email",
+            "label": "Adresse E-mail",
+            "description": "",
+            "required": "1",
+            "size": "large",
+            "placeholder": "ex: votreadresse@email.com"
+        },
+        "3": {
+            "id": "3",
+            "type": "select",
+            "label": "Sujet du Message",
+            "choices": {
+                "1": { "label": "Demande d'informations" },
+                "2": { "label": "Processus d'admission" },
+                "3": { "label": "Support technique" },
+                "4": { "label": "Autre" }
+            },
+            "description": "",
+            "required": "1",
+            "size": "large"
+        },
+        "4": {
+            "id": "4",
+            "type": "textarea",
+            "label": "Votre Message",
+            "description": "",
+            "required": "1",
+            "size": "large",
+            "placeholder": "Écrivez votre message ici..."
+        },
+        "5": {
+            "id": "5",
+            "type": "gdpr-checkbox",
+            "label": "Consentement",
+            "description": "<p>En soumettant ce formulaire, j'accepte que les informations saisies soient exploitées dans le cadre de ma demande et de la relation commerciale qui peut en découler.<\/p>",
+            "required": "1",
+            "choices": {
+                "1": { "label": "J'accepte la politique de confidentialité.", "value": "1", "default": "1" }
+            }
+        }
+    },
+    "settings": {
+        "form_title": "Formulaire de Contact Professionnel",
+        "form_desc": "",
+        "submit_text": "Envoyer le Message",
+        "submit_text_processing": "Envoi en cours...",
+        "honeypot": "1",
+        "notification_enable": "1",
+        "notifications": {
+            "1": {
+                "notification_name": "Notification par défaut",
+                "email": "{admin_email}",
+                "subject": "Nouveau message depuis le site CADE : {field_id=\"3\"}",
+                "sender_name": "{field_id=\"1\"}",
+                "sender_address": "{admin_email}",
+                "replyto": "{field_id=\"2\"}",
+                "message": "{all_fields}"
+            }
+        },
+        "confirmation_type": "message",
+        "confirmation_message": "Merci de nous avoir contactés ! Nous vous répondrons dans les plus brefs délais."
+    },
+    "meta": {
+        "template": "contact"
+    }
+}]
