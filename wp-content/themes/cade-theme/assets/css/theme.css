@@ -1,0 +1,125 @@
+/*
+Theme Name: CADE Theme
+Theme URI: https://github.com/maconsolation58-pixel/CADESP
+Author: maconsolation58-pixel
+Author URI: https://github.com/maconsolation58-pixel
+Description: Thème sur mesure pour le Collège Académie des Élites (CADE) de San Pedro, basé sur le cahier des charges du projet.
+Version: 1.0.1
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: cade-theme
+*/
+
+/* --- Guide de Style CADE --- */
+
+:root {
+    --bleu-institutionnel: #003366;
+    --orange-energique: #FF6600;
+    --vert-naturel: #006633;
+    --blanc-casse: #F8F8F8;
+    --grafite: #333333;
+
+    --font-titres: 'Playfair Display', serif;
+    --font-texte: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--font-texte);
+    background-color: var(--blanc-casse);
+    color: var(--grafite);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-titres);
+    color: var(--bleu-institutionnel);
+}
+
+a {
+    color: var(--orange-energique);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Responsive Design: Tailles de police --- */
+
+/* Pour les tablettes */
+@media (min-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+}
+
+/* Pour les ordinateurs de bureau */
+@media (min-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+}
+
+/* --- Composant: Hero Section --- */
+
+.hero-section {
+    background-color: var(--bleu-institutionnel);
+    color: white;
+    padding: 5em 2em;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: white; /* Répété pour surcharger la couleur par défaut des titres */
+}
+
+.hero-subtitle {
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+.hero-button {
+    display: inline-block;
+    background-color: var(--orange-energique);
+    color: white;
+    padding: 0.8em 1.5em;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+    background-color: #e65c00; /* Une teinte d'orange légèrement plus foncée */
+    text-decoration: none;
+}
+
+/* --- Composant: Carte de Localisation --- */
+
+.location-map-section {
+    padding: 2em 0;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 400px;
+    background-color: #e9e9e9;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2em;
+    color: #777;
+}
+
+.map-placeholder::before {
+    content: "Espace réservé pour la carte de localisation";
+}
