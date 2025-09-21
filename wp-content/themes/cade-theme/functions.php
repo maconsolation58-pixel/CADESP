@@ -1,7 +1,6 @@
 <?php
 /**
  * Fonctions et définitions du thème CADE.
- *
  * @package CADE_Theme
  */
 
@@ -19,19 +18,30 @@ endif;
 add_action( 'after_setup_theme', 'cade_theme_setup' );
 
 /**
+ * Enregistre nos zones de widgets.
+ */
+function cade_widgets_init() {
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Pied de page', 'cade-theme' ),
+            'id'            => 'footer-1',
+            'description'   => esc_html__( 'Ajoutez ici les widgets qui apparaîtront dans votre pied de page.', 'cade-theme' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+}
+add_action( 'widgets_init', 'cade_widgets_init' );
+
+/**
  * Met en file d'attente les scripts et les styles.
  */
 function cade_theme_enqueue_scripts() {
-    // Polices
     wp_enqueue_style( 'cade-theme-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap', array(), null );
-
-    // Feuille de style principale du thème
     wp_enqueue_style( 'cade-theme-main-style', get_template_directory_uri() . '/assets/css/theme.css', array('cade-theme-fonts'), '1.0.0' );
-
-    // Feuille de style racine (pour les informations du thème)
     wp_enqueue_style( 'cade-theme-root-style', get_stylesheet_uri(), array('cade-theme-main-style'), '1.0.1' );
-
-    // Fichier JavaScript principal
     wp_enqueue_script( 'cade-theme-main-js', get_template_directory_uri() . '/assets/js/main.js', array(), '1.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'cade_theme_enqueue_scripts' );

@@ -354,3 +354,46 @@ a:hover {
 .all-news-link {
     margin-top: 2em;
 }
+
+/* --- Structure: Footer --- */
+.site-footer {
+    background-color: var(--bleu-institutionnel);
+    color: #a9b7c5;
+    padding: 3em 2em;
+}
+.site-footer a {
+    color: #ffffff;
+}
+.site-footer h2, .site-footer h3 {
+    color: #ffffff;
+}
+.footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #004488;
+}
+.footer-bottom {
+    padding-top: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+.site-info {
+    font-size: 0.9em;
+}
+.social-links {
+    display: flex;
+    gap: 1em;
+}
+/* Note: Les icônes sociales nécessiteraient une police d'icônes comme FontAwesome */
+.social-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
