@@ -539,3 +539,25 @@ a:hover {
 .social-links a:hover {
     background-color: var(--orange-energique);
 }
+
+/* --- Composant: Hero Section (Mise à jour avec image) --- */
+
+.hero-section {
+    position: relative; /* Nécessaire pour la superposition */
+    background-image: url('../images/backgrounds/hero-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+}
+
+/* Superposition de couleur pour la lisibilité du texte */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 51, 102, 0.7); /* Bleu institutionnel avec 70% d'opacité */
+    z-index: -1;
+}
