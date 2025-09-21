@@ -11,6 +11,9 @@
                 <div class="footer-column">
                     <?php get_template_part( 'template-parts/components/contact-info' ); ?>
                 </div>
+                
+                <?php get_template_part( 'template-parts/layout/footer/quick-links' ); ?>
+
                 <?php get_template_part( 'template-parts/layout/footer/footer-widgets' ); ?>
             </div>
             <div class="footer-bottom">
