@@ -1,0 +1,54 @@
+{
+    "key": "group_associated_gallery_native",
+    "title": "Galerie Associée (Natif)",
+    "fields": [
+        {
+            "key": "field_associated_gallery_link_native",
+            "label": "Galerie",
+            "name": "associated_gallery_native",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "cade_gallery"
+            ],
+            "max": 1,
+            "return_format": "object",
+            "taxonomy": [],
+            "min": 0,
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": [],
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "modified": 1758560529
+}

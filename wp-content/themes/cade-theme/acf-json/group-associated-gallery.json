@@ -1,0 +1,1 @@
+[{"key":"group_associated_gallery_native","title":"Galerie Associée (Natif)","fields":[{"key":"field_associated_gallery_link_native","label":"Galerie","name":"associated_gallery_native","type":"relationship","post_type":["cade_gallery"],"max":1,"return_format":"object"}],"location":[[{"param":"post_type","operator":"==","value":"page"}]]}]

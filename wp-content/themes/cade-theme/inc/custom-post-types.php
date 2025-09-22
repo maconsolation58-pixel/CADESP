@@ -105,3 +105,31 @@ function cade_register_post_types() {
 
 }
 add_action( 'init', 'cade_register_post_types' );
+
+    // 5. Galeries (Corrigé et optimisé)
+    $gallery_labels = array(
+        'name'                  => _x( 'Galeries', 'Post Type General Name', 'cade-theme' ),
+        'singular_name'         => _x( 'Galerie', 'Post Type Singular Name', 'cade-theme' ),
+        'menu_name'             => __( 'Galeries', 'cade-theme' ),
+        'add_new_item'          => __( 'Ajouter une nouvelle galerie', 'cade-theme' ),
+        'new_item'              => __( 'Nouvelle Galerie', 'cade-theme' ),
+        'edit_item'             => __( 'Modifier la galerie', 'cade-theme' ),
+        'view_item'             => __( 'Voir la galerie', 'cade-theme' ),
+        'search_items'          => __( 'Rechercher des galeries', 'cade-theme' ),
+        'not_found'             => __( 'Aucune galerie trouvée', 'cade-theme' ),
+        'not_found_in_trash'    => __( 'Aucune galerie trouvée dans la corbeille', 'cade-theme' ),
+    );
+    $gallery_args = array(
+        'label'                 => __( 'Galerie', 'cade-theme' ),
+        'labels'                => $gallery_labels,
+        'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 24,
+        'menu_icon'             => 'dashicons-format-gallery',
+        'show_in_rest'          => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => false,
+    );
+    register_post_type( 'cade_gallery', $gallery_args );
