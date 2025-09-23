@@ -129,3 +129,63 @@ a:hover { text-decoration: underline; }
     background-color: #e0e0e0;
     border: 1px solid #ccc;
 }
+
+/* --- RESTAURATION DES STYLES DES COMPOSANTS (Patch Final) --- */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}
+.map-placeholder{width:100%;height:400px;background-color:#e9e9e9;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.2em;color:#777;}
+.map-placeholder::before{content:"Espace réservé pour la carte de localisation";}
+.faculty-photo-placeholder{width:150px;height:150px;border-radius:50%;margin:0 auto 1em auto;background-color:#e0e0e0;border:1px solid #ccc;}
+.breadcrumb-nav { background-color: #f1f1f1; padding: 0.75em 2em; border-bottom: 1px solid #ddd; }
+.breadcrumb-list { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 0.5em; font-size: 0.9em; }
+.hero-section { position: relative; background-image: url('../images/backgrounds/hero-background.jpg'); background-size: cover; background-position: center center; color: white; padding: 5em 2em; text-align: center; }
+.hero-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 51, 102, 0.7); z-index: -1; }
+.hero-title { font-size: 2.5em; margin-bottom: 0.5em; color: white; }
+.hero-subtitle { font-size: 1.2em; margin-top: 0; }
+.hero-button { display: inline-block; background-color: var(--orange-energique); color: white; padding: 0.8em 1.5em; border-radius: 5px; text-decoration: none; margin-top: 1em; font-weight: bold; }
+.academic-programs-section, .faculty-display-section, .event-calendar-section, .news-grid-section, .gallery-section, .admission-process-section { padding: 4em 2em; text-align: center; }
+.academic-programs-section .section-title, .faculty-display-section .section-title, .event-calendar-section .section-title, .news-grid-section .section-title, .gallery-section .section-title, .admission-process-section .section-title { margin-bottom: 2em; font-size: 2em; }
+.programs-grid, .faculty-grid, .news-grid, .gallery-grid, .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2em; }
+.program-item { background-color: white; border: 1px solid #ddd; border-radius: 8px; padding: 1.5em; text-align: left; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.faculty-item { text-align: center; }
+.faculty-photo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 1em; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.events-list .event-item { background-color: #ffffff; padding: 1.5em; border-radius: 5px; margin-bottom: 1.5em; text-align: left; border-left: 5px solid var(--orange-energique); }
+.news-item { border-bottom: 3px solid var(--vert-naturel); padding-bottom: 1.5em; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+.step-item { background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 2em; position: relative; text-align: left; }
+.step-number { position: absolute; top: -1em; left: -1em; background-color: var(--orange-energique); color: white; width: 2.5em; height: 2.5em; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.step-title { margin-top: 1em; font-size: 1.2em; color: var(--bleu-institutionnel); }
+.pagination { margin-top: 3em; display: flex; justify-content: center; }
+.pagination .page-numbers { display: inline-block; padding: 0.5em 1em; border: 1px solid #ddd; border-radius: 4px; }
+.pagination .page-numbers.current { background-color: var(--bleu-institutionnel); color: #fff; }
+
+/* --- FINITIONS DU MENU (Effet de Survol) --- */
+
+/* Applique la couleur orange au survol */
+.main-navigation a:hover {
+    color: var(--orange-energique);
+    text-decoration: none; /* Empêche le soulignement par défaut */
+}
+
+/* Effet de soulignement animé au survol */
+.main-navigation a {
+    position: relative;
+    padding-bottom: 0.5em; /* Ajoute un peu d'espace pour le soulignement */
+}
+
+.main-navigation a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--orange-energique);
+    transform: scaleX(0); /* Le soulignement est invisible par défaut */
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.main-navigation a:hover::after {
+    transform: scaleX(1); /* Le soulignement apparaît au survol */
+    transform-origin: bottom left;
+}

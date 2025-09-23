@@ -10,7 +10,7 @@
     <h3 style="margin-top: 0;">Coordonnées Officielles</h3>
     
     <p>
-        <strong>Téléphones:</strong><br>
+        <strong>Téléphones:+225 0758401942<br></strong><br>
         <?php if ( defined( 'CADE_PHONE_1' ) ) : ?>
             <a href="tel:<?php echo esc_attr( str_replace(' ', '', CADE_PHONE_1) ); ?>"><?php echo esc_html( CADE_PHONE_1 ); ?></a><br>
         <?php endif; ?>
